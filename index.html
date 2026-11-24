@@ -3,48 +3,50 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Калькулятор Металла V2.0 | Ной Технологии</title>
+<title>Калькулятор Металла V3.0 | Ной Технологии</title>
 <!-- © 2024 Ной Технологии. Автор: Сухоруков Сергей Евгеньевич. Все права защищены. -->
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-body { background: #1a1a1a; color: #fff; padding: 15px; min-height: 100vh; }
+body { background: #1a1a1a; color: #fff; padding: 12px; min-height: 100vh; }
 .container { max-width: 500px; margin: 0 auto; }
-h1 { text-align: center; color: #00d4ff; font-size: 22px; margin-bottom: 5px; }
-.subtitle { text-align: center; color: #888; font-size: 12px; margin-bottom: 20px; }
-.card { background: #2a2a2a; border-radius: 12px; padding: 15px; margin-bottom: 15px; }
-label { display: block; color: #aaa; font-size: 13px; margin-bottom: 5px; font-weight: bold; }
-select, input { width: 100%; padding: 12px; background: #1a1a1a; border: 2px solid #444; border-radius: 8px; color: #fff; font-size: 15px; margin-bottom: 12px; }
+h1 { text-align: center; color: #00d4ff; font-size: 20px; margin-bottom: 4px; }
+.subtitle { text-align: center; color: #888; font-size: 11px; margin-bottom: 15px; }
+.card { background: #2a2a2a; border-radius: 10px; padding: 12px; margin-bottom: 12px; }
+label { display: block; color: #aaa; font-size: 12px; margin-bottom: 4px; font-weight: bold; text-transform: uppercase; }
+select, input { width: 100%; padding: 10px; background: #1a1a1a; border: 2px solid #444; border-radius: 6px; color: #fff; font-size: 14px; margin-bottom: 10px; }
 select:focus, input:focus { border-color: #00d4ff; outline: none; }
-.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.btn-quick { padding: 8px 12px; background: #333; border: 1px solid #555; border-radius: 6px; color: #fff; font-size: 12px; cursor: pointer; }
-.btn-quick:active { background: #00d4ff; color: #000; }
-.btn-calc { width: 100%; padding: 16px; background: linear-gradient(135deg, #00d4ff, #0099cc); color: #fff; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+.row { display: flex; gap: 8px; }
+.row > div { flex: 1; }
+.btn-calc { width: 100%; padding: 14px; background: linear-gradient(135deg, #00d4ff, #0099cc); color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 8px; }
 .btn-calc:active { transform: scale(0.98); }
-.result { background: #0a0a0a; border: 2px solid #00d4ff; border-radius: 10px; padding: 20px; text-align: center; margin-top: 15px; }
-.result-label { color: #888; font-size: 14px; }
-.result-value { color: #00d4ff; font-size: 32px; font-weight: bold; margin: 5px 0; }
-.result-price { color: #00ff88; font-size: 24px; font-weight: bold; }
-.footer { text-align: center; color: #666; font-size: 11px; margin-top: 20px; }
+.result { background: #0a0a0a; border: 2px solid #00d4ff; border-radius: 8px; padding: 12px; margin-top: 12px; }
+.result-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #333; }
+.result-row:last-child { border-bottom: none; }
+.result-label { color: #aaa; font-size: 13px; }
+.result-value { color: #00d4ff; font-size: 15px; font-weight: bold; }
+.result-value.price { color: #00ff88; font-size: 18px; }
+.footer { text-align: center; color: #666; font-size: 10px; margin-top: 15px; }
 .hidden { display: none; }
 </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>⚙️ Калькулятор Металла V2.0</h1>
+  <h1>⚙️ Калькулятор Металла V3.0</h1>
   <div class="subtitle">Рабочий инструмент для мастера. Ной Технологии</div>
 
   <div class="card">
     <label>МЕТАЛЛ</label>
-    <select id="metal" onchange="updatePrice()">
-      <option value="7850" data-price="65">Чёрный металл Ст3 (7850 кг/м³) — 65₽/кг</option>
-      <option value="7850" data-price="75">Чёрный металл Ст20 (7850 кг/м³) — 75₽/кг</option>
-      <option value="7850" data-price="95">Нержавейка AISI 304 (7900 кг/м³) — 95₽/кг</option>
-      <option value="7850" data-price="55">Нержавейка AISI 430 (7700 кг/м³) — 55₽/кг</option>
-      <option value="2700" data-price="180">Алюминий (2700 кг/м³) — 180₽/кг</option>
-      <option value="8900" data-price="650">Медь (8900 кг/м³) — 650₽/кг</option>
-      <option value="8500" data-price="320">Латунь (8500 кг/м³) — 320₽/кг</option>
-      <option value="7850" data-price="85">Оцинковка (7850 кг/м³) — 85₽/кг</option>
+    <select id="metal" onchange="updateDensity()">
+      <option value="7850">Чёрный металл (Ст3, Ст20) — 7850 кг/м³</option>
+      <option value="7900">Нержавейка AISI 304 — 7900 кг/м³</option>
+      <option value="7700">Нержавейка AISI 430 — 7700 кг/м³</option>
+      <option value="2700">Алюминий — 2700 кг/м³</option>
+      <option value="8900">Медь — 8900 кг/м³</option>
+      <option value="8500">Латунь — 8500 кг/м³</option>
+      <option value="7850">Оцинковка — 7850 кг/м³</option>
+      <option value="7200">Чугун — 7200 кг/м³</option>
+      <option value="7300">Бронза — 7300 кг/м³</option>
     </select>
 
     <label>ПРОФИЛЬ</label>
@@ -54,36 +56,75 @@ select:focus, input:focus { border-color: #00d4ff; outline: none; }
       <option value="round">Круглый пруток</option>
       <option value="pipe">Труба круглая</option>
       <option value="pipe_square">Труба профильная (квадрат)</option>
+      <option value="pipe_rect">Труба профильная (прямоугольник)</option>
       <option value="angle">Уголок равнополочный</option>
       <option value="channel">Швеллер</option>
       <option value="strip">Полоса</option>
+      <option value="hex">Шестигранник</option>
     </select>
 
-    <label id="label1">ДЛИНА (мм)</label>
-    <input type="number" id="dim1" placeholder="Например: 6000" inputmode="numeric">
+    <label>ЕДИНИЦЫ ИЗМЕРЕНИЯ</label>
+    <select id="units">
+      <option value="1">Миллиметры (мм)</option>
+      <option value="10">Сантиметры (см)</option>
+      <option value="1000">Метры (м)</option>
+    </select>
 
-    <label id="label2">ШИРИНА / ДИАМЕТР (мм)</label>
-    <input type="number" id="dim2" placeholder="Например: 1000" inputmode="numeric">
+    <div class="row">
+      <div>
+        <label id="label1">Длина</label>
+        <input type="number" id="dim1" placeholder="0" inputmode="decimal">
+      </div>
+      <div>
+        <label id="label2">Ширина / Диаметр</label>
+        <input type="number" id="dim2" placeholder="0" inputmode="decimal">
+      </div>
+    </div>
 
     <div id="dim3-block">
-      <label id="label3">ТОЛЩИНА / СТОРОНА (мм)</label>
-      <input type="number" id="dim3" placeholder="Например: 5" inputmode="numeric">
+      <label id="label3">Толщина / Сторона</label>
+      <input type="number" id="dim3" placeholder="0" inputmode="decimal">
     </div>
 
-    <div class="btn-row" id="quick-btns">
-      <button class="btn-quick" onclick="setQuick(1000,500,5)">Лист 1000×500×5</button>
-      <button class="btn-quick" onclick="setQuick(6000,12,0)">Арматура 12мм 6м</button>
-      <button class="btn-quick" onclick="setQuick(6000,20,0)">Арматура 20мм 6м</button>
-      <button class="btn-quick" onclick="setQuick(6000,50,3)">Труба 50×3мм 6м</button>
+    <div id="dim4-block" class="hidden">
+      <label id="label4">Вторая сторона</label>
+      <input type="number" id="dim4" placeholder="0" inputmode="decimal">
     </div>
 
-    <button class="btn-calc" onclick="calculate()">РАССЧИТАТЬ ВЕС И ЦЕНУ</button>
+    <div class="row">
+      <div>
+        <label>ЦЕНА ЗА КГ (₽)</label>
+        <input type="number" id="price" placeholder="Например: 65" inputmode="decimal">
+      </div>
+      <div>
+        <label>КОЛИЧЕСТВО (шт)</label>
+        <input type="number" id="qty" placeholder="1" value="1" inputmode="numeric">
+      </div>
+    </div>
+
+    <button class="btn-calc" onclick="calculate()">РАССЧИТАТЬ</button>
 
     <div class="result" id="result" style="display:none;">
-      <div class="result-label">ВЕС:</div>
-      <div class="result-value" id="weight">0.00 кг</div>
-      <div class="result-label">СТОИМОСТЬ:</div>
-      <div class="result-price" id="price">0 ₽</div>
+      <div class="result-row">
+        <span class="result-label">Вес 1 шт:</span>
+        <span class="result-value" id="w1">0 кг</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Общий вес:</span>
+        <span class="result-value" id="wTotal">0 кг</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Площадь поверхности 1 шт:</span>
+        <span class="result-value" id="area">0 м²</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">Стоимость 1 шт:</span>
+        <span class="result-value price" id="p1">0 ₽</span>
+      </div>
+      <div class="result-row">
+        <span class="result-label">ИТОГО:</span>
+        <span class="result-value price" id="pTotal">0 ₽</span>
+      </div>
     </div>
   </div>
 
@@ -94,12 +135,11 @@ select:focus, input:focus { border-color: #00d4ff; outline: none; }
 </div>
 
 <script>
-/* Ной Технологии V2.0 | Автор: Сухоруков С.Е. | NOI-TECH-2024 */
-let pricePerKg = 65;
+/* Ной Технологии V3.0 | Автор: Сухоруков С.Е. | NOI-TECH-2024 */
+let density = 7850;
 
-function updatePrice() {
-  const sel = document.getElementById('metal');
-  pricePerKg = parseFloat(sel.options[sel.selectedIndex].dataset.price);
+function updateDensity() {
+  density = parseFloat(document.getElementById('metal').value);
 }
 
 function toggleFields() {
@@ -107,91 +147,105 @@ function toggleFields() {
   const l1 = document.getElementById('label1');
   const l2 = document.getElementById('label2');
   const l3 = document.getElementById('label3');
+  const l4 = document.getElementById('label4');
   const d3 = document.getElementById('dim3-block');
-  const qb = document.getElementById('quick-btns');
+  const d4 = document.getElementById('dim4-block');
 
-  if (p === 'sheet') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'ШИРИНА (мм)'; l3.textContent = 'ТОЛЩИНА (мм)';
-    d3.classList.remove('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(1000,500,5)">1000×500×5</button><button class="btn-quick" onclick="setQuick(2000,1000,10)">2000×1000×10</button>';
-  } else if (p === 'armatura') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'ДИАМЕТР (мм)';
+  d3.classList.remove('hidden');
+  d4.classList.add('hidden');
+
+  if (p === 'sheet' || p === 'strip') {
+    l1.textContent = 'Длина'; l2.textContent = 'Ширина'; l3.textContent = 'Толщина';
+  } else if (p === 'armatura' || p === 'round' || p === 'hex') {
+    l1.textContent = 'Длина'; l2.textContent = 'Диаметр';
     d3.classList.add('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(6000,8,0)">⌀8мм 6м</button><button class="btn-quick" onclick="setQuick(6000,10,0)">⌀10мм 6м</button><button class="btn-quick" onclick="setQuick(6000,12,0)">⌀12мм 6м</button><button class="btn-quick" onclick="setQuick(6000,16,0)">⌀16мм 6м</button><button class="btn-quick" onclick="setQuick(6000,20,0)">⌀20мм 6м</button>';
-  } else if (p === 'round') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'ДИАМЕТР (мм)';
-    d3.classList.add('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(1000,20,0)">⌀20мм 1м</button><button class="btn-quick" onclick="setQuick(1000,50,0)">⌀50мм 1м</button>';
   } else if (p === 'pipe') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'НАРУЖНЫЙ ДИАМЕТР (мм)'; l3.textContent = 'ТОЛЩИНА СТЕНКИ (мм)';
-    d3.classList.remove('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(6000,50,3)">⌀50×3мм 6м</button><button class="btn-quick" onclick="setQuick(6000,100,4)">⌀100×4мм 6м</button>';
+    l1.textContent = 'Длина'; l2.textContent = 'Наружный диаметр'; l3.textContent = 'Толщина стенки';
   } else if (p === 'pipe_square') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'СТОРОНА (мм)'; l3.textContent = 'ТОЛЩИНА СТЕНКИ (мм)';
-    d3.classList.remove('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(6000,40,3)">40×40×3мм 6м</button><button class="btn-quick" onclick="setQuick(6000,60,4)">60×60×4мм 6м</button>';
+    l1.textContent = 'Длина'; l2.textContent = 'Сторона'; l3.textContent = 'Толщина стенки';
+  } else if (p === 'pipe_rect') {
+    l1.textContent = 'Длина'; l2.textContent = 'Сторона A'; l3.textContent = 'Сторона B';
+    d4.classList.remove('hidden');
+    l4.textContent = 'Толщина стенки';
   } else if (p === 'angle') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'ШИРИНА ПОЛКИ (мм)'; l3.textContent = 'ТОЛЩИНА (мм)';
-    d3.classList.remove('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(6000,50,5)">50×50×5мм 6м</button><button class="btn-quick" onclick="setQuick(6000,75,6)">75×75×6мм 6м</button>';
+    l1.textContent = 'Длина'; l2.textContent = 'Ширина полки'; l3.textContent = 'Толщина';
   } else if (p === 'channel') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'ВЫСОТА (мм)'; l3.textContent = 'ТОЛЩИНА СТЕНКИ (мм)';
-    d3.classList.remove('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(6000,100,6)">100×6мм 6м</button><button class="btn-quick" onclick="setQuick(6000,160,8)">160×8мм 6м</button>';
-  } else if (p === 'strip') {
-    l1.textContent = 'ДЛИНА (мм)'; l2.textContent = 'ШИРИНА (мм)'; l3.textContent = 'ТОЛЩИНА (мм)';
-    d3.classList.remove('hidden');
-    qb.innerHTML = '<button class="btn-quick" onclick="setQuick(6000,40,4)">40×4мм 6м</button>';
+    l1.textContent = 'Длина'; l2.textContent = 'Высота'; l3.textContent = 'Толщина стенки';
   }
-}
-
-function setQuick(d1, d2, d3) {
-  document.getElementById('dim1').value = d1;
-  document.getElementById('dim2').value = d2;
-  document.getElementById('dim3').value = d3;
 }
 
 function calculate() {
   const p = document.getElementById('profile').value;
+  const u = parseFloat(document.getElementById('units').value);
   const d1 = parseFloat(document.getElementById('dim1').value);
   const d2 = parseFloat(document.getElementById('dim2').value);
   const d3 = parseFloat(document.getElementById('dim3').value) || 0;
+  const d4 = parseFloat(document.getElementById('dim4').value) || 0;
+  const price = parseFloat(document.getElementById('price').value) || 0;
+  const qty = parseInt(document.getElementById('qty').value) || 1;
 
   if (isNaN(d1) || isNaN(d2)) { alert('Заполни длину и второй размер!'); return; }
 
-  let volume = 0;
-  const m = document.getElementById('metal').value;
+  // Переводим в метры
+  const L = d1 / u;
+  const A = d2 / u;
+  const T = d3 / u;
+  const B = d4 / u;
 
-  if (p === 'sheet') {
-    volume = (d1/1000) * (d2/1000) * (d3/1000);
+  let volume = 0;
+  let area = 0; // площадь поверхности в м²
+
+  if (p === 'sheet' || p === 'strip') {
+    volume = L * A * T;
+    area = 2 * (L*A + L*T + A*T);
   } else if (p === 'armatura' || p === 'round') {
-    const r = (d2/2)/1000;
-    volume = Math.PI * r * r * (d1/1000);
+    const r = A / 2;
+    volume = Math.PI * r * r * L;
+    area = 2 * Math.PI * r * L + 2 * Math.PI * r * r;
+  } else if (p === 'hex') {
+    const r = A / 2;
+    const s = r; // сторона шестигранника ≈ радиус
+    volume = (3 * Math.sqrt(3) / 2) * s * s * L;
+    area = 6 * s * L + 2 * (3 * Math.sqrt(3) / 2) * s * s;
   } else if (p === 'pipe') {
-    const R = (d2/2)/1000;
-    const r = R - (d3/1000);
-    volume = Math.PI * (R*R - r*r) * (d1/1000);
+    const R = A / 2;
+    const r = R - T;
+    if (r <= 0) { alert('Толщина стенки больше радиуса!'); return; }
+    volume = Math.PI * (R*R - r*r) * L;
+    area = 2 * Math.PI * R * L + 2 * Math.PI * r * L + 2 * Math.PI * (R*R - r*r);
   } else if (p === 'pipe_square') {
-    const a = d2/1000;
-    const t = d3/1000;
-    volume = (a*a - (a-2*t)*(a-2*t)) * (d1/1000);
+    const a = A;
+    const ai = a - 2*T;
+    if (ai <= 0) { alert('Толщина стенки слишком большая!'); return; }
+    volume = (a*a - ai*ai) * L;
+    area = 4 * a * L + 4 * ai * L + 2 * (a*a - ai*ai);
+  } else if (p === 'pipe_rect') {
+    const a = A, b = B;
+    const ai = a - 2*T, bi = b - 2*T;
+    if (ai <= 0 || bi <= 0) { alert('Толщина стенки слишком большая!'); return; }
+    volume = (a*b - ai*bi) * L;
+    area = 2*(a+b)*L + 2*(ai+bi)*L + 2*(a*b - ai*bi);
   } else if (p === 'angle') {
-    const a = d2/1000;
-    const t = d3/1000;
-    volume = (2*a*t - t*t) * (d1/1000);
+    const a = A, t = T;
+    volume = (2*a*t - t*t) * L;
+    area = (2*a + 2*(a-t)) * L + 2 * (2*a*t - t*t);
   } else if (p === 'channel') {
-    const h = d2/1000;
-    const t = d3/1000;
-    volume = (h*t*2 + (h-2*t)*t) * (d1/1000);
-  } else if (p === 'strip') {
-    volume = (d1/1000) * (d2/1000) * (d3/1000);
+    const h = A, t = T;
+    const b = h / 2; // ширина полки примерно половина высоты (упрощённо)
+    volume = (h*t*2 + (h-2*t)*t) * L;
+    area = (2*h + 4*b) * L;
   }
 
-  const weight = volume * m;
-  const price = weight * pricePerKg;
+  const weight1 = volume * density;
+  const weightTotal = weight1 * qty;
+  const price1 = weight1 * price;
+  const priceTotal = weightTotal * price;
 
-  document.getElementById('weight').textContent = weight.toFixed(2) + ' кг';
-  document.getElementById('price').textContent = Math.round(price) + ' ₽';
+  document.getElementById('w1').textContent = weight1.toFixed(3) + ' кг';
+  document.getElementById('wTotal').textContent = weightTotal.toFixed(3) + ' кг' + (qty > 1 ? ' (' + qty + ' шт)' : '');
+  document.getElementById('area').textContent = area.toFixed(3) + ' м²';
+  document.getElementById('p1').textContent = price > 0 ? Math.round(price1) + ' ₽' : '—';
+  document.getElementById('pTotal').textContent = price > 0 ? Math.round(priceTotal) + ' ₽' : '—';
   document.getElementById('result').style.display = 'block';
 }
 
