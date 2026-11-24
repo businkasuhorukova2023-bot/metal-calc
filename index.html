@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>СтройКальк V4.1 | Ной Технологии</title>
+<title>СтройКальк V5.0 | Ной Технологии</title>
 <!-- © 2024 Ной Технологии. Автор: Сухоруков Сергей Евгеньевич. Все права защищены. -->
 <!-- NOI-TECH-2024-SUKHORUKOV -->
 <style>
@@ -13,7 +13,7 @@ body{background:#121826;color:#fff;padding:10px;min-height:100vh}
 h1{text-align:center;color:#00d4ff;font-size:18px;margin-bottom:3px}
 .sub{text-align:center;color:#777;font-size:10px;margin-bottom:12px}
 .tabs{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px}
-.tab{flex:1;min-width:70px;padding:8px 4px;background:#1e293b;border:1px solid #334155;border-radius:6px;color:#94a3b8;font-size:10px;font-weight:bold;cursor:pointer;text-align:center}
+.tab{flex:1;min-width:60px;padding:7px 3px;background:#1e293b;border:1px solid #334155;border-radius:6px;color:#94a3b8;font-size:9px;font-weight:bold;cursor:pointer;text-align:center}
 .tab.active{background:#00d4ff;color:#000;border-color:#00d4ff}
 .card{background:#1e293b;border-radius:10px;padding:12px;margin-bottom:10px}
 .sec{display:none}
@@ -37,7 +37,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 </head>
 <body>
 <div class="container">
-<h1>🏗️ СтройКальк V4.1</h1>
+<h1>🏗️ СтройКальк V5.0</h1>
 <div class="sub">Универсальный калькулятор мастера. © Ной Технологии</div>
 
 <div class="tabs">
@@ -47,6 +47,8 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
  <div class="tab" onclick="showTab('pilo',this)">🪵 Дерево</div>
  <div class="tab" onclick="showTab('syp',this)">🪨 Сыпучие</div>
  <div class="tab" onclick="showTab('kraska',this)">🎨 Краска</div>
+ <div class="tab" onclick="showTab('krepezh',this)">🔩 Крепёж</div>
+ <div class="tab" onclick="showTab('electro',this)">⚡ Электрика</div>
  <div class="tab" onclick="showTab('remont',this)">🔨 Ремонт</div>
 </div>
 
@@ -67,24 +69,41 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="11340">Свинец</option>
   <option value="21450">Вольфрам</option>
   <option value="10500">Серебро</option>
+  <option value="19300">Золото</option>
+  <option value="21450">Платина</option>
+  <option value="4500">Титан</option>
+  <option value="7140">Цинк</option>
+  <option value="7290">Олово</option>
+  <option value="8900">Никель</option>
  </select>
  <label>ПРОФИЛЬ</label>
  <select id="m_prof" onchange="mFields()">
   <option value="sheet">Лист</option>
   <option value="arm">Арматура</option>
   <option value="round">Круглый пруток</option>
+  <option value="square">Квадрат</option>
+  <option value="rectangle">Прямоугольник</option>
   <option value="pipe">Труба круглая</option>
   <option value="pipe_sq">Труба профильная (квадрат)</option>
   <option value="pipe_rc">Труба профильная (прямоугольник)</option>
   <option value="angle">Уголок равнополочный</option>
+  <option value="angle_un">Уголок неравнополочный</option>
   <option value="shv">Швеллер</option>
   <option value="strip">Полоса</option>
   <option value="hex">Шестигранник</option>
   <option value="dvt">Двутавр (упрощённо)</option>
+  <option value="wire">Проволока</option>
+  <option value="mesh">Сетка (вес 1 м²)</option>
  </select>
- <div class="row"><div><label>Длина</label><input type="number" id="m_d1" placeholder="мм" inputmode="decimal"></div><div><label>Размер 2 (диаметр/ширина)</label><input type="number" id="m_d2" placeholder="мм" inputmode="decimal"></div></div>
- <div id="m_d3b"><label>Размер 3 (толщина/сторона)</label><input type="number" id="m_d3" placeholder="мм" inputmode="decimal"></div>
- <div id="m_d4b" class="hid"><label>Размер 4 (вторая сторона)</label><input type="number" id="m_d4" placeholder="мм" inputmode="decimal"></div>
+ <label>ЕДИНИЦЫ ИЗМЕРЕНИЯ</label>
+ <select id="m_units">
+  <option value="1">Миллиметры (мм)</option>
+  <option value="10">Сантиметры (см)</option>
+  <option value="1000">Метры (м)</option>
+ </select>
+ <div class="row"><div><label>Длина</label><input type="number" id="m_d1" placeholder="0" inputmode="decimal"></div><div><label>Размер 2 (диаметр/ширина)</label><input type="number" id="m_d2" placeholder="0" inputmode="decimal"></div></div>
+ <div id="m_d3b"><label>Размер 3 (толщина/сторона)</label><input type="number" id="m_d3" placeholder="0" inputmode="decimal"></div>
+ <div id="m_d4b" class="hid"><label>Размер 4 (вторая сторона/толщина полки)</label><input type="number" id="m_d4" placeholder="0" inputmode="decimal"></div>
  <div class="row"><div><label>ЦЕНА ЗА КГ, ₽ (вводишь сам)</label><input type="number" id="m_price" placeholder="₽" inputmode="decimal"></div><div><label>Кол-во, шт</label><input type="number" id="m_qty" value="1" inputmode="numeric"></div></div>
  <button class="btn" onclick="calcMetal()">РАССЧИТАТЬ</button>
  <div class="res" id="m_res" style="display:none">
@@ -108,11 +127,12 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="svai">Свайный (ростверк)</option>
   <option value="styazhka">Стяжка пола</option>
   <option value="kolonna">Колонна / столб</option>
+  <option value="fundament_block">Фундаментные блоки (ФБС)</option>
  </select>
  <div id="b_f1"><label>Длина, м</label><input type="number" id="b_d1" placeholder="м" inputmode="decimal"></div>
  <div id="b_f2"><label>Ширина, м</label><input type="number" id="b_d2" placeholder="м" inputmode="decimal"></div>
  <div id="b_f3"><label>Высота (глубина/толщина), м</label><input type="number" id="b_d3" placeholder="м" inputmode="decimal"></div>
- <div id="b_f4" class="hid"><label>Кол-во столбов/свай, шт</label><input type="number" id="b_d4" placeholder="шт" inputmode="numeric"></div>
+ <div id="b_f4" class="hid"><label>Кол-во столбов/свай/блоков, шт</label><input type="number" id="b_d4" placeholder="шт" inputmode="numeric"></div>
  <div id="b_f5" class="hid"><label>Диаметр столба/сваи, м</label><input type="number" id="b_d5" placeholder="м" inputmode="decimal"></div>
  <label>МАРКА БЕТОНА</label>
  <select id="b_mark">
@@ -155,6 +175,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="keram">Керамзитоблок 400×200×200</option>
   <option value="silikat">Силикатный кирпич</option>
   <option value="ogneupor">Огнеупорный (шамотный)</option>
+  <option value="porotherm">Поротерм (тёплая керамика)</option>
  </select>
  <label>ТОЛЩИНА СТЕНЫ</label>
  <select id="k_thick">
@@ -194,11 +215,14 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="vagon">Вагонка</option>
   <option value="imitaciya">Имитация бруса</option>
   <option value="blockhaus">Блок-хаус</option>
+  <option value="planen">Планкен</option>
   <option value="fanera">Фанера</option>
   <option value="osb">ОСБ плита</option>
   <option value="dsp">ДСП</option>
   <option value="mdf">МДФ</option>
   <option value="gkl">ГКЛ (гипсокартон)</option>
+  <option value="gvl">ГВЛ (гипсоволокно)</option>
+  <option value="orgalit">Оргалит (ДВП)</option>
  </select>
  <div class="row"><div><label>Длина, м</label><input type="number" id="p_l" placeholder="м" inputmode="decimal"></div><div><label>Ширина, мм</label><input type="number" id="p_w" placeholder="мм" inputmode="numeric"></div></div>
  <div class="row"><div><label>Толщина, мм</label><input type="number" id="p_t" placeholder="мм" inputmode="numeric"></div><div><label>Кол-во, шт</label><input type="number" id="p_n" value="1" inputmode="numeric"></div></div>
@@ -233,6 +257,8 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="600">Керамзит</option>
   <option value="800">Шлак</option>
   <option value="1200">Опилки</option>
+  <option value="1900">Асфальтная крошка</option>
+  <option value="1600">Бой кирпича/бетона</option>
  </select>
  <label>ОБЪЁМ (длина × ширина × высота слоя)</label>
  <div class="row"><div><label>Длина, м</label><input type="number" id="s_l" placeholder="м" inputmode="decimal"></div><div><label>Ширина, м</label><input type="number" id="s_w" placeholder="м" inputmode="decimal"></div></div>
@@ -264,6 +290,8 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="0.3">Пористая поверхность</option>
   <option value="0.08">ГКЛ (гипсокартон)</option>
   <option value="0.22">OSB плита</option>
+  <option value="0.15">Радиатор отопления</option>
+  <option value="0.2">Трубы металлические</option>
  </select>
  <label>ПЛОЩАДЬ, м²</label>
  <input type="number" id="kr_area" placeholder="м²" inputmode="decimal">
@@ -283,6 +311,69 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 </div>
 </div>
 
+<!-- КРЕПЁЖ -->
+<div class="sec" id="krepezh">
+<div class="card">
+ <label>ТИП КРЕПЕЖА</label>
+ <select id="kr_type">
+  <option value="gvozd">Гвоздь строительный</option>
+  <option value="samorez_derevo">Саморез по дереву</option>
+  <option value="samorez_metall">Саморез по металлу</option>
+  <option value="bolt">Болт с гайкой</option>
+  <option value="shurup">Шуруп</option>
+  <option value="dybel">Дюбель</option>
+  <option value="ankер">Анкер</option>
+ </select>
+ <label>РАЗМЕР</label>
+ <select id="kr_size">
+  <option value="0.003">Гвоздь 50мм (~3г)</option>
+  <option value="0.005">Гвоздь 100мм (~5г)</option>
+  <option value="0.008">Гвоздь 150мм (~8г)</option>
+  <option value="0.004">Саморез 3.5×25мм (~4г)</option>
+  <option value="0.006">Саморез 4.2×50мм (~6г)</option>
+  <option value="0.01">Саморез 5×70мм (~10г)</option>
+  <option value="0.015">Болт М6 (~15г)</option>
+  <option value="0.025">Болт М8 (~25г)</option>
+  <option value="0.04">Болт М10 (~40г)</option>
+  <option value="0.06">Болт М12 (~60г)</option>
+  <option value="0.1">Болт М16 (~100г)</option>
+ </select>
+ <label>КОЛИЧЕСТВО, ШТ</label>
+ <input type="number" id="kr_qty" placeholder="шт" inputmode="numeric">
+ <label>ЦЕНА ЗА 1 ШТ, ₽ (вводишь сам)</label>
+ <input type="number" id="kr_price" placeholder="₽" inputmode="decimal">
+ <button class="btn" onclick="calcKrepezh()">РАССЧИТАТЬ</button>
+ <div class="res" id="kr_res" style="display:none">
+  <div class="rr"><span class="rl">Общий вес:</span><span class="rv" id="kr_wt">—</span></div>
+  <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="kr_pt">—</span></div>
+ </div>
+</div>
+</div>
+
+<!-- ЭЛЕКТРИКА -->
+<div class="sec" id="electro">
+<div class="card">
+ <label>ТИП КАБЕЛЯ / ПРОВОДА</label>
+ <select id="e_type">
+  <option value="1.5">Кабель 1.5 мм² (освещение)</option>
+  <option value="2.5">Кабель 2.5 мм² (розетки)</option>
+  <option value="4">Кабель 4 мм² (плита)</option>
+  <option value="6">Кабель 6 мм² (ввод)</option>
+  <option value="10">Кабель 10 мм² (силовой)</option>
+  <option value="16">Кабель 16 мм² (силовой)</option>
+ </select>
+ <label>ДЛИНА, м</label>
+ <input type="number" id="e_len" placeholder="м" inputmode="decimal">
+ <label>ЦЕНА ЗА МЕТР, ₽ (вводишь сам)</label>
+ <input type="number" id="e_price" placeholder="₽/м" inputmode="decimal">
+ <button class="btn" onclick="calcElectro()">РАССЧИТАТЬ</button>
+ <div class="res" id="e_res" style="display:none">
+  <div class="rr"><span class="rl">Длина:</span><span class="rv" id="e_l">—</span></div>
+  <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="e_pt">—</span></div>
+ </div>
+</div>
+</div>
+
 <!-- РЕМОНТ -->
 <div class="sec" id="remont">
 <div class="card">
@@ -296,6 +387,8 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="pol">Площадь пола/потолка</option>
   <option value="shtukaturka">Штукатурка стен</option>
   <option value="shpaklevka">Шпаклёвка стен</option>
+  <option value="plitka_pol">Плитка на пол</option>
+  <option value="plitka_steny">Плитка на стены</option>
  </select>
  <div id="r_f1"><label>Длина комнаты, м</label><input type="number" id="r_l" placeholder="м" inputmode="decimal"></div>
  <div id="r_f2"><label>Ширина комнаты, м</label><input type="number" id="r_w" placeholder="м" inputmode="decimal"></div>
@@ -322,7 +415,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 </div>
 
 <script>
-/* Ной Технологии V4.1 | Автор: Сухоруков С.Е. | NOI-TECH-2024-SUKHORUKOV */
+/* Ной Технологии V5.0 | Автор: Сухоруков С.Е. | NOI-TECH-2024-SUKHORUKOV */
 /* Все права защищены. Копирование без разрешения запрещено. */
 
 function showTab(id,el){
@@ -338,12 +431,14 @@ function mFields(){
  const d3=document.getElementById('m_d3b');
  const d4=document.getElementById('m_d4b');
  d3.classList.remove('hid');d4.classList.add('hid');
- if(p==='arm'||p==='round'||p==='hex')d3.classList.add('hid');
- if(p==='pipe_rc')d4.classList.remove('hid');
+ if(p==='arm'||p==='round'||p==='hex'||p==='wire')d3.classList.add('hid');
+ if(p==='pipe_rc'||p==='angle_un')d4.classList.remove('hid');
+ if(p==='mesh'){d3.classList.add('hid');d4.classList.add('hid');}
 }
 function calcMetal(){
  const p=document.getElementById('m_prof').value;
  const d=parseFloat(document.getElementById('m_metal').value);
+ const u=parseFloat(document.getElementById('m_units').value);
  const d1=parseFloat(document.getElementById('m_d1').value);
  const d2=parseFloat(document.getElementById('m_d2').value);
  const d3=parseFloat(document.getElementById('m_d3').value)||0;
@@ -351,17 +446,21 @@ function calcMetal(){
  const pr=parseFloat(document.getElementById('m_price').value)||0;
  const q=parseInt(document.getElementById('m_qty').value)||1;
  if(isNaN(d1)||isNaN(d2)){alert('Заполни длину и размер 2!');return;}
- const L=d1/1000,A=d2/1000,T=d3/1000,B=d4/1000;
+ const L=d1/u,A=d2/u,T=d3/u,B=d4/u;
  let v=0,a=0;
  if(p==='sheet'||p==='strip'){v=L*A*T;a=2*(L*A+L*T+A*T);}
- else if(p==='arm'||p==='round'){const r=A/2;v=Math.PI*r*r*L;a=2*Math.PI*r*L;}
+ else if(p==='arm'||p==='round'||p==='wire'){const r=A/2;v=Math.PI*r*r*L;a=2*Math.PI*r*L;}
+ else if(p==='square'){v=A*A*L;a=4*A*L+2*A*A;}
+ else if(p==='rectangle'){v=A*B*L;a=2*(A+B)*L+2*A*B;}
  else if(p==='hex'){const r=A/2;v=(3*Math.sqrt(3)/2)*r*r*L;a=6*r*L;}
  else if(p==='pipe'){const R=A/2,r=R-T;if(r<=0){alert('Толщина стенки больше радиуса!');return;}v=Math.PI*(R*R-r*r)*L;a=2*Math.PI*(R+r)*L;}
  else if(p==='pipe_sq'){const ai=A-2*T;if(ai<=0){alert('Толщина слишком большая!');return;}v=(A*A-ai*ai)*L;a=4*(A+ai)*L;}
  else if(p==='pipe_rc'){const ai=A-2*T,bi=B-2*T;if(ai<=0||bi<=0){alert('Толщина слишком большая!');return;}v=(A*B-ai*bi)*L;a=2*(A+B+ai+bi)*L;}
  else if(p==='angle'){v=(2*A*T-T*T)*L;a=(4*A-2*T)*L;}
+ else if(p==='angle_un'){const b=B||A;v=(A*T+b*T-T*T)*L;a=(2*A+2*b-2*T)*L;}
  else if(p==='shv'){v=(2*A*T+(A-2*T)*T)*L;a=(2*A+4*(A/2))*L;}
  else if(p==='dvt'){v=(2*A*T+(A-2*T)*0.6*T)*L;a=6*A*L;}
+ else if(p==='mesh'){v=A*A*T*d/1000;a=A*A;}
  const w1=v*d,wt=w1*q,ar=a*q;
  document.getElementById('m_w1').textContent=w1.toFixed(3)+' кг';
  document.getElementById('m_wt').textContent=wt.toFixed(3)+' кг';
@@ -376,7 +475,7 @@ function bFields(){
  const t=document.getElementById('b_type').value;
  document.getElementById('b_f4').classList.add('hid');
  document.getElementById('b_f5').classList.add('hid');
- if(t==='stolb'||t==='svai'){document.getElementById('b_f4').classList.remove('hid');document.getElementById('b_f5').classList.remove('hid');}
+ if(t==='stolb'||t==='svai'||t==='fundament_block'){document.getElementById('b_f4').classList.remove('hid');document.getElementById('b_f5').classList.remove('hid');}
 }
 function calcBeton(){
  const t=document.getElementById('b_type').value;
@@ -393,6 +492,7 @@ function calcBeton(){
  else if(t==='svai')v=d4*Math.PI*(d5/2)*(d5/2)*d3+d1*d2*0.3;
  else if(t==='styazhka')v=d1*d2*d3;
  else if(t==='kolonna')v=Math.PI*(d2/2)*(d2/2)*d1;
+ else if(t==='fundament_block')v=d4*d1*d2*d3;
  const mark=document.getElementById('b_mark').value;
  const k={'M100':200,'M150':250,'M200':300,'M250':350,'M300':400,'M350':450,'M400':500,'M450':550,'M500':600};
  const cemK=k[mark]||300;
@@ -421,7 +521,7 @@ function calcKirpich(){
  const price=parseFloat(document.getElementById('k_price').value)||0;
  const rprice=parseFloat(document.getElementById('k_rprice').value)||0;
  const S=l*h-pr;
- const rates={'kirp':51*th,'kirp15':39*th,'kirp2':26*th,'gaz':5.6,'peno':5.6,'shlak':12.5,'keram':12.5,'silikat':51*th,'ogneupor':51*th};
+ const rates={'kirp':51*th,'kirp15':39*th,'kirp2':26*th,'gaz':5.6,'peno':5.6,'shlak':12.5,'keram':12.5,'silikat':51*th,'ogneupor':51*th,'porotherm':14*th};
  const n=Math.ceil(S*rates[t]);
  const nz=Math.ceil(n*1.05);
  const rv=(S*0.22*th).toFixed(2);
@@ -489,12 +589,32 @@ function calcKraska(){
  document.getElementById('kr_res').style.display='block';
 }
 
+// КРЕПЁЖ
+function calcKrepezh(){
+ const w=parseFloat(document.getElementById('kr_size').value);
+ const q=parseInt(document.getElementById('kr_qty').value)||0;
+ const pr=parseFloat(document.getElementById('kr_price').value)||0;
+ const wt=w*q;
+ document.getElementById('kr_wt').textContent=wt.toFixed(3)+' кг ('+q+' шт)';
+ document.getElementById('kr_pt').textContent=pr>0?Math.round(q*pr)+' ₽':'—';
+ document.getElementById('kr_res').style.display='block';
+}
+
+// ЭЛЕКТРИКА
+function calcElectro(){
+ const len=parseFloat(document.getElementById('e_len').value)||0;
+ const pr=parseFloat(document.getElementById('e_price').value)||0;
+ document.getElementById('e_l').textContent=len+' м';
+ document.getElementById('e_pt').textContent=pr>0?Math.round(len*pr)+' ₽':'—';
+ document.getElementById('e_res').style.display='block';
+}
+
 // РЕМОНТ
 function rFields(){
  const t=document.getElementById('r_type').value;
  ['r_f4','r_f5','r_f6','r_f7','r_f8'].forEach(id=>document.getElementById(id).classList.add('hid'));
  if(t==='oboi'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f6').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
- else if(t==='plitka'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f5').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
+ else if(t==='plitka'||t==='plitka_pol'||t==='plitka_steny'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f5').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
  else if(t==='laminat'||t==='linoleum'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f7').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
  else if(t==='steny'||t==='shtukaturka'||t==='shpaklevka'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
  else if(t==='pol'){document.getElementById('r_f8').classList.remove('hid');}
@@ -508,7 +628,7 @@ function calcRemont(){
  const pr=parseFloat(document.getElementById('r_price').value)||0;
  let S=0,n=0;
  if(t==='oboi'){S=2*(l+w)*h-proem;const ra=parseFloat(document.getElementById('r_rarea').value)||5.3;n=Math.ceil(S*1.1/ra);}
- else if(t==='plitka'){S=l*w-proem;const ts=(parseFloat(document.getElementById('r_tsize').value)||30)/100;n=Math.ceil(S*1.1/(ts*ts));}
+ else if(t==='plitka'||t==='plitka_pol'||t==='plitka_steny'){S=l*w-proem;const ts=(parseFloat(document.getElementById('r_tsize').value)||30)/100;n=Math.ceil(S*1.1/(ts*ts));}
  else if(t==='laminat'||t==='linoleum'){S=l*w;const la=parseFloat(document.getElementById('r_lamarea').value)||2.1;n=Math.ceil(S*1.1/la);}
  else if(t==='steny'||t==='shtukaturka'||t==='shpaklevka'){S=2*(l+w)*h-proem;n=S;}
  else if(t==='pol'){S=l*w;n=S;}
