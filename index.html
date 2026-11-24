@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>СтройКальк V5.3 | Ной Технологии</title>
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#00d4ff">
+<link rel="icon" type="image/png" href="./icon-512.png">
 <!-- © 2024 Ной Технологии. Автор: Сухоруков Сергей Евгеньевич. Все права защищены. -->
 <!-- NOI-TECH-2024-SUKHORUKOV -->
 <style>
@@ -461,7 +464,6 @@ function updateLabels(){
  document.getElementById('lbl_d4').textContent='Размер 4 ('+unit+')';
 }
 
-// МЕТАЛЛ
 function mFields(){
  const p=document.getElementById('m_prof').value;
  const d3=document.getElementById('m_d3b');
@@ -499,7 +501,6 @@ function calcMetal(){
  else if(p==='dvt'){v=(2*A*T+(A-2*T)*0.6*T)*L;a=6*A*L;}
  else if(p==='mesh'){v=A*A*T*d/1000;a=A*A;}
  const w1=v*d,wt=w1*q,ar=a*q;
- 
  let w1Text, wtText, wClass='rv';
  if(wu==='g'){
   w1Text = (w1*1000).toFixed(2) + ' г';
@@ -509,7 +510,6 @@ function calcMetal(){
   w1Text = w1.toFixed(3) + ' кг';
   wtText = wt.toFixed(3) + ' кг';
  }
- 
  document.getElementById('m_w1').textContent=w1Text;
  document.getElementById('m_w1').className=wClass;
  document.getElementById('m_wt').textContent=wtText;
@@ -520,7 +520,6 @@ function calcMetal(){
  document.getElementById('m_res').style.display='block';
 }
 
-// БЕТОН
 function bFields(){
  const t=document.getElementById('b_type').value;
  document.getElementById('b_f4').classList.add('hid');
@@ -561,7 +560,6 @@ function calcBeton(){
  document.getElementById('b_res').style.display='block';
 }
 
-// КИРПИЧ
 function calcKirpich(){
  const t=document.getElementById('k_type').value;
  const th=parseFloat(document.getElementById('k_thick').value);
@@ -585,7 +583,6 @@ function calcKirpich(){
  document.getElementById('k_res').style.display='block';
 }
 
-// ПИЛОМАТЕРИАЛЫ
 function calcPilo(){
  const l=parseFloat(document.getElementById('p_l').value)||0;
  const w=parseFloat(document.getElementById('p_w').value)/1000||0;
@@ -604,7 +601,6 @@ function calcPilo(){
  document.getElementById('p_res').style.display='block';
 }
 
-// СЫПУЧИЕ
 function calcSyp(){
  const d=parseFloat(document.getElementById('s_type').value);
  const l=parseFloat(document.getElementById('s_l').value)||0;
@@ -622,7 +618,6 @@ function calcSyp(){
  document.getElementById('s_res').style.display='block';
 }
 
-// КРАСКА
 function calcKraska(){
  const rate=parseFloat(document.getElementById('ks_surf').value);
  const area=parseFloat(document.getElementById('ks_area').value)||0;
@@ -639,7 +634,6 @@ function calcKraska(){
  document.getElementById('ks_res').style.display='block';
 }
 
-// КРЕПЁЖ
 function calcKrepezh(){
  const w=parseFloat(document.getElementById('kp_size').value);
  const q=parseInt(document.getElementById('kp_qty').value)||0;
@@ -650,7 +644,6 @@ function calcKrepezh(){
  document.getElementById('kp_res').style.display='block';
 }
 
-// ЭЛЕКТРИКА
 function calcElectro(){
  const len=parseFloat(document.getElementById('e_len').value)||0;
  const pr=parseFloat(document.getElementById('e_price').value)||0;
@@ -659,7 +652,6 @@ function calcElectro(){
  document.getElementById('e_res').style.display='block';
 }
 
-// РЕМОНТ
 function rFields(){
  const t=document.getElementById('r_type').value;
  ['r_f4','r_f5','r_f6','r_f7','r_f8'].forEach(id=>document.getElementById(id).classList.add('hid'));
@@ -689,6 +681,15 @@ function calcRemont(){
 }
 
 updateLabels();
+
+// Регистрация Service Worker (для работы без интернета)
+if('serviceWorker' in navigator){
+ navigator.serviceWorker.register('./sw.js').then(function(reg){
+  console.log('SW зарегистрирован');
+ }).catch(function(err){
+  console.log('SW ошибка:', err);
+ });
+}
 </script>
 </body>
 </html>
