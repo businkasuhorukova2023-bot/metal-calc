@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>СтройКальк V4.0 | Ной Технологии</title>
+<title>СтройКальк V4.1 | Ной Технологии</title>
 <!-- © 2024 Ной Технологии. Автор: Сухоруков Сергей Евгеньевич. Все права защищены. -->
-<!-- NOI-TECH-2024-SUKHORUKOV | Копирование без разрешения запрещено -->
+<!-- NOI-TECH-2024-SUKHORUKOV -->
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#121826;color:#fff;padding:10px;min-height:100vh}
@@ -37,7 +37,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 </head>
 <body>
 <div class="container">
-<h1>🏗️ СтройКальк V4.0</h1>
+<h1>🏗️ СтройКальк V4.1</h1>
 <div class="sub">Универсальный калькулятор мастера. © Ной Технологии</div>
 
 <div class="tabs">
@@ -53,41 +53,44 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <!-- МЕТАЛЛ -->
 <div class="sec active" id="metal">
 <div class="card">
- <label>МЕТАЛЛ</label>
+ <label>МЕТАЛЛ (только плотность, цену вводишь сам)</label>
  <select id="m_metal">
-  <option value="7850">Чёрный (Ст3/Ст20) — 7850 кг/м³</option>
-  <option value="7900">Нержавейка 304 — 7900 кг/м³</option>
-  <option value="7700">Нержавейка 430 — 7700 кг/м³</option>
-  <option value="2700">Алюминий — 2700 кг/м³</option>
-  <option value="8900">Медь — 8900 кг/м³</option>
-  <option value="8500">Латунь — 8500 кг/м³</option>
-  <option value="7300">Бронза — 7300 кг/м³</option>
-  <option value="7200">Чугун — 7200 кг/м³</option>
-  <option value="7850">Оцинковка — 7850 кг/м³</option>
+  <option value="7850">Чёрный металл (Ст3, Ст20)</option>
+  <option value="7900">Нержавейка AISI 304</option>
+  <option value="7700">Нержавейка AISI 430</option>
+  <option value="2700">Алюминий</option>
+  <option value="8900">Медь</option>
+  <option value="8500">Латунь</option>
+  <option value="7300">Бронза</option>
+  <option value="7200">Чугун</option>
+  <option value="7850">Оцинковка</option>
+  <option value="11340">Свинец</option>
+  <option value="21450">Вольфрам</option>
+  <option value="10500">Серебро</option>
  </select>
  <label>ПРОФИЛЬ</label>
  <select id="m_prof" onchange="mFields()">
   <option value="sheet">Лист</option>
   <option value="arm">Арматура</option>
-  <option value="round">Круг</option>
+  <option value="round">Круглый пруток</option>
   <option value="pipe">Труба круглая</option>
-  <option value="pipe_sq">Труба квадратная</option>
-  <option value="pipe_rc">Труба прямоугольная</option>
-  <option value="angle">Уголок</option>
+  <option value="pipe_sq">Труба профильная (квадрат)</option>
+  <option value="pipe_rc">Труба профильная (прямоугольник)</option>
+  <option value="angle">Уголок равнополочный</option>
   <option value="shv">Швеллер</option>
   <option value="strip">Полоса</option>
   <option value="hex">Шестигранник</option>
   <option value="dvt">Двутавр (упрощённо)</option>
  </select>
- <div class="row"><div><label>Длина</label><input type="number" id="m_d1" placeholder="мм" inputmode="decimal"></div><div><label>Размер 2</label><input type="number" id="m_d2" placeholder="мм" inputmode="decimal"></div></div>
- <div id="m_d3b"><label>Размер 3 (толщина)</label><input type="number" id="m_d3" placeholder="мм" inputmode="decimal"></div>
- <div id="m_d4b" class="hid"><label>Размер 4</label><input type="number" id="m_d4" placeholder="мм" inputmode="decimal"></div>
- <div class="row"><div><label>Цена за кг, ₽</label><input type="number" id="m_price" placeholder="₽" inputmode="decimal"></div><div><label>Кол-во, шт</label><input type="number" id="m_qty" value="1" inputmode="numeric"></div></div>
+ <div class="row"><div><label>Длина</label><input type="number" id="m_d1" placeholder="мм" inputmode="decimal"></div><div><label>Размер 2 (диаметр/ширина)</label><input type="number" id="m_d2" placeholder="мм" inputmode="decimal"></div></div>
+ <div id="m_d3b"><label>Размер 3 (толщина/сторона)</label><input type="number" id="m_d3" placeholder="мм" inputmode="decimal"></div>
+ <div id="m_d4b" class="hid"><label>Размер 4 (вторая сторона)</label><input type="number" id="m_d4" placeholder="мм" inputmode="decimal"></div>
+ <div class="row"><div><label>ЦЕНА ЗА КГ, ₽ (вводишь сам)</label><input type="number" id="m_price" placeholder="₽" inputmode="decimal"></div><div><label>Кол-во, шт</label><input type="number" id="m_qty" value="1" inputmode="numeric"></div></div>
  <button class="btn" onclick="calcMetal()">РАССЧИТАТЬ</button>
  <div class="res" id="m_res" style="display:none">
   <div class="rr"><span class="rl">Вес 1 шт:</span><span class="rv" id="m_w1">—</span></div>
   <div class="rr"><span class="rl">Общий вес:</span><span class="rv" id="m_wt">—</span></div>
-  <div class="rr"><span class="rl">Площадь пов-ти:</span><span class="rv" id="m_a">—</span></div>
+  <div class="rr"><span class="rl">Площадь пов-ти (для краски):</span><span class="rv" id="m_a">—</span></div>
   <div class="rr"><span class="rl">Цена 1 шт:</span><span class="rv p" id="m_p1">—</span></div>
   <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="m_pt">—</span></div>
  </div>
@@ -97,30 +100,33 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <!-- БЕТОН -->
 <div class="sec" id="beton">
 <div class="card">
- <label>ТИП ФУНДАМЕНТА</label>
+ <label>ТИП ФУНДАМЕНТА / КОНСТРУКЦИИ</label>
  <select id="b_type" onchange="bFields()">
-  <option value="lenta">Ленточный</option>
-  <option value="plita">Плитный</option>
-  <option value="stolb">Столбчатый</option>
+  <option value="lenta">Ленточный фундамент</option>
+  <option value="plita">Плитный фундамент</option>
+  <option value="stolb">Столбчатый фундамент</option>
   <option value="svai">Свайный (ростверк)</option>
   <option value="styazhka">Стяжка пола</option>
+  <option value="kolonna">Колонна / столб</option>
  </select>
- <div id="b_f1"><label>Длина ленты, м</label><input type="number" id="b_d1" placeholder="м" inputmode="decimal"></div>
- <div id="b_f2"><label>Ширина ленты, м</label><input type="number" id="b_d2" placeholder="м" inputmode="decimal"></div>
- <div id="b_f3"><label>Высота (глубина), м</label><input type="number" id="b_d3" placeholder="м" inputmode="decimal"></div>
+ <div id="b_f1"><label>Длина, м</label><input type="number" id="b_d1" placeholder="м" inputmode="decimal"></div>
+ <div id="b_f2"><label>Ширина, м</label><input type="number" id="b_d2" placeholder="м" inputmode="decimal"></div>
+ <div id="b_f3"><label>Высота (глубина/толщина), м</label><input type="number" id="b_d3" placeholder="м" inputmode="decimal"></div>
  <div id="b_f4" class="hid"><label>Кол-во столбов/свай, шт</label><input type="number" id="b_d4" placeholder="шт" inputmode="numeric"></div>
  <div id="b_f5" class="hid"><label>Диаметр столба/сваи, м</label><input type="number" id="b_d5" placeholder="м" inputmode="decimal"></div>
  <label>МАРКА БЕТОНА</label>
  <select id="b_mark">
-  <option value="M100">М100 (В7.5) — лёгкий</option>
+  <option value="M100">М100 (В7.5)</option>
   <option value="M150">М150 (В12.5)</option>
-  <option value="M200" selected>М200 (В15) — стандарт</option>
+  <option value="M200" selected>М200 (В15)</option>
   <option value="M250">М250 (В20)</option>
-  <option value="M300">М300 (В22.5) — прочный</option>
+  <option value="M300">М300 (В22.5)</option>
   <option value="M350">М350 (В25)</option>
-  <option value="M400">М400 (В30) — тяжёлый</option>
+  <option value="M400">М400 (В30)</option>
+  <option value="M450">М450 (В35)</option>
+  <option value="M500">М500 (В40)</option>
  </select>
- <label>ЦЕНА БЕТОНА ЗА М³, ₽</label>
+ <label>ЦЕНА БЕТОНА ЗА М³, ₽ (вводишь сам)</label>
  <input type="number" id="b_price" placeholder="₽/м³" inputmode="decimal">
  <button class="btn" onclick="calcBeton()">РАССЧИТАТЬ</button>
  <div class="res" id="b_res" style="display:none">
@@ -138,7 +144,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <!-- КИРПИЧ -->
 <div class="sec" id="kirpich">
 <div class="card">
- <label>ТИП КЛАДКИ</label>
+ <label>ТИП БЛОКА / КИРПИЧА</label>
  <select id="k_type">
   <option value="kirp">Кирпич одинарный (250×120×65)</option>
   <option value="kirp15">Кирпич полуторный (250×120×88)</option>
@@ -147,6 +153,8 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="peno">Пеноблок 600×300×200</option>
   <option value="shlak">Шлакоблок 400×200×200</option>
   <option value="keram">Керамзитоблок 400×200×200</option>
+  <option value="silikat">Силикатный кирпич</option>
+  <option value="ogneupor">Огнеупорный (шамотный)</option>
  </select>
  <label>ТОЛЩИНА СТЕНЫ</label>
  <select id="k_thick">
@@ -159,9 +167,9 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
  <div class="row"><div><label>Длина стены, м</label><input type="number" id="k_l" placeholder="м" inputmode="decimal"></div><div><label>Высота стены, м</label><input type="number" id="k_h" placeholder="м" inputmode="decimal"></div></div>
  <label>ПЛОЩАДЬ ПРОЁМОВ (окна+двери), м²</label>
  <input type="number" id="k_proem" value="0" placeholder="0" inputmode="decimal">
- <label>ЦЕНА 1 ШТ / 1 М³, ₽</label>
+ <label>ЦЕНА 1 ШТ / 1 М³, ₽ (вводишь сам)</label>
  <input type="number" id="k_price" placeholder="₽" inputmode="decimal">
- <label>РАСТВОР: цена за м³, ₽ (или 0)</label>
+ <label>ЦЕНА РАСТВОРА ЗА М³, ₽ (или 0)</label>
  <input type="number" id="k_rprice" value="0" placeholder="0" inputmode="decimal">
  <button class="btn" onclick="calcKirpich()">РАССЧИТАТЬ</button>
  <div class="res" id="k_res" style="display:none">
@@ -180,21 +188,28 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
  <label>ТИП ПИЛОМАТЕРИАЛА</label>
  <select id="p_type">
   <option value="doska">Доска обрезная</option>
+  <option value="doska_neobr">Доска необрезная</option>
   <option value="brus">Брус</option>
+  <option value="brusok">Брусок</option>
   <option value="vagon">Вагонка</option>
+  <option value="imitaciya">Имитация бруса</option>
+  <option value="blockhaus">Блок-хаус</option>
   <option value="fanera">Фанера</option>
   <option value="osb">ОСБ плита</option>
+  <option value="dsp">ДСП</option>
+  <option value="mdf">МДФ</option>
+  <option value="gkl">ГКЛ (гипсокартон)</option>
  </select>
  <div class="row"><div><label>Длина, м</label><input type="number" id="p_l" placeholder="м" inputmode="decimal"></div><div><label>Ширина, мм</label><input type="number" id="p_w" placeholder="мм" inputmode="numeric"></div></div>
  <div class="row"><div><label>Толщина, мм</label><input type="number" id="p_t" placeholder="мм" inputmode="numeric"></div><div><label>Кол-во, шт</label><input type="number" id="p_n" value="1" inputmode="numeric"></div></div>
- <label>ЦЕНА ЗА М³, ₽</label>
+ <label>ЦЕНА ЗА М³, ₽ (вводишь сам)</label>
  <input type="number" id="p_price" placeholder="₽/м³" inputmode="decimal">
  <button class="btn" onclick="calcPilo()">РАССЧИТАТЬ</button>
  <div class="res" id="p_res" style="display:none">
   <div class="rr"><span class="rl">Объём 1 шт:</span><span class="rv" id="p_v1">—</span></div>
   <div class="rr"><span class="rl">Общий объём:</span><span class="rv" id="p_vt">—</span></div>
   <div class="rr"><span class="rl">Площадь покрытия:</span><span class="rv" id="p_s">—</span></div>
-  <div class="rr"><span class="rl">Вес (сосна, 500кг/м³):</span><span class="rv" id="p_wt">—</span></div>
+  <div class="rr"><span class="rl">Вес (сосна ~500кг/м³):</span><span class="rv" id="p_wt">—</span></div>
   <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="p_pt">—</span></div>
  </div>
 </div>
@@ -203,23 +218,27 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <!-- СЫПУЧИЕ -->
 <div class="sec" id="syp">
 <div class="card">
- <label>МАТЕРИАЛ</label>
+ <label>МАТЕРИАЛ (только плотность)</label>
  <select id="s_type">
-  <option value="1500">Песок речной (1500 кг/м³)</option>
-  <option value="1400">Песок карьерный (1400 кг/м³)</option>
-  <option value="1450">Песок мытый (1450 кг/м³)</option>
-  <option value="1400">Щебень 5-20 (1400 кг/м³)</option>
-  <option value="1350">Щебень 20-40 (1350 кг/м³)</option>
-  <option value="1500">Гравий (1500 кг/м³)</option>
-  <option value="1700">Грунт (1700 кг/м³)</option>
-  <option value="1800">Глина (1800 кг/м³)</option>
-  <option value="600">Керамзит (600 кг/м³)</option>
+  <option value="1500">Песок речной</option>
+  <option value="1400">Песок карьерный</option>
+  <option value="1450">Песок мытый</option>
+  <option value="1600">Песок строительный</option>
+  <option value="1400">Щебень 5-20</option>
+  <option value="1350">Щебень 20-40</option>
+  <option value="1300">Щебень 40-70</option>
+  <option value="1500">Гравий</option>
+  <option value="1700">Грунт</option>
+  <option value="1800">Глина</option>
+  <option value="600">Керамзит</option>
+  <option value="800">Шлак</option>
+  <option value="1200">Опилки</option>
  </select>
- <label>ОБЪЁМ</label>
+ <label>ОБЪЁМ (длина × ширина × высота слоя)</label>
  <div class="row"><div><label>Длина, м</label><input type="number" id="s_l" placeholder="м" inputmode="decimal"></div><div><label>Ширина, м</label><input type="number" id="s_w" placeholder="м" inputmode="decimal"></div></div>
  <label>Высота/толщина слоя, м</label>
  <input type="number" id="s_h" placeholder="м" inputmode="decimal">
- <div class="row"><div><label>Цена за м³, ₽</label><input type="number" id="s_price" placeholder="₽" inputmode="decimal"></div><div><label>Грузоподъёмность машины, т</label><input type="number" id="s_truck" value="10" inputmode="numeric"></div></div>
+ <div class="row"><div><label>ЦЕНА ЗА М³, ₽ (вводишь сам)</label><input type="number" id="s_price" placeholder="₽" inputmode="decimal"></div><div><label>Грузоподъёмность машины, т</label><input type="number" id="s_truck" value="10" inputmode="numeric"></div></div>
  <button class="btn" onclick="calcSyp()">РАССЧИТАТЬ</button>
  <div class="res" id="s_res" style="display:none">
   <div class="rr"><span class="rl">Объём:</span><span class="rv" id="s_v">—</span></div>
@@ -233,16 +252,18 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <!-- КРАСКА -->
 <div class="sec" id="kraska">
 <div class="card">
- <label>ПОВЕРХНОСТЬ</label>
+ <label>ПОВЕРХНОСТЬ (расход л/м² на 1 слой)</label>
  <select id="kr_surf">
-  <option value="0.15">Стена оштукатуренная (0.15 л/м²)</option>
-  <option value="0.12">Стена гладкая (0.12 л/м²)</option>
-  <option value="0.2">Дерево необработанное (0.2 л/м²)</option>
-  <option value="0.1">Дерево обработанное (0.1 л/м²)</option>
-  <option value="0.18">Металл (0.18 л/м²)</option>
-  <option value="0.25">Бетон/кирпич (0.25 л/м²)</option>
-  <option value="0.1">Потолок (0.1 л/м²)</option>
-  <option value="0.3">Пористая поверхность (0.3 л/м²)</option>
+  <option value="0.15">Стена оштукатуренная</option>
+  <option value="0.12">Стена гладкая (шпаклёвка)</option>
+  <option value="0.2">Дерево необработанное</option>
+  <option value="0.1">Дерево обработанное</option>
+  <option value="0.18">Металл</option>
+  <option value="0.25">Бетон/кирпич</option>
+  <option value="0.1">Потолок</option>
+  <option value="0.3">Пористая поверхность</option>
+  <option value="0.08">ГКЛ (гипсокартон)</option>
+  <option value="0.22">OSB плита</option>
  </select>
  <label>ПЛОЩАДЬ, м²</label>
  <input type="number" id="kr_area" placeholder="м²" inputmode="decimal">
@@ -250,7 +271,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
  <input type="number" id="kr_layers" value="2" inputmode="numeric">
  <label>ОБЪЁМ БАНКИ, л</label>
  <input type="number" id="kr_can" value="10" inputmode="decimal">
- <label>ЦЕНА БАНКИ, ₽</label>
+ <label>ЦЕНА БАНКИ, ₽ (вводишь сам)</label>
  <input type="number" id="kr_price" placeholder="₽" inputmode="decimal">
  <button class="btn" onclick="calcKraska()">РАССЧИТАТЬ</button>
  <div class="res" id="kr_res" style="display:none">
@@ -270,17 +291,20 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="oboi">Обои (рулоны)</option>
   <option value="plitka">Плитка (шт)</option>
   <option value="laminat">Ламинат (упаковки)</option>
+  <option value="linoleum">Линолеум (м²)</option>
   <option value="steny">Площадь стен комнаты</option>
   <option value="pol">Площадь пола/потолка</option>
+  <option value="shtukaturka">Штукатурка стен</option>
+  <option value="shpaklevka">Шпаклёвка стен</option>
  </select>
  <div id="r_f1"><label>Длина комнаты, м</label><input type="number" id="r_l" placeholder="м" inputmode="decimal"></div>
  <div id="r_f2"><label>Ширина комнаты, м</label><input type="number" id="r_w" placeholder="м" inputmode="decimal"></div>
  <div id="r_f3"><label>Высота потолка, м</label><input type="number" id="r_h" placeholder="м" inputmode="decimal"></div>
- <div id="r_f4" class="hid"><label>Площадь проёмов, м²</label><input type="number" id="r_proem" value="0" inputmode="decimal"></div>
+ <div id="r_f4" class="hid"><label>Площадь проёмов (окна+двери), м²</label><input type="number" id="r_proem" value="0" inputmode="decimal"></div>
  <div id="r_f5" class="hid"><label>Размер плитки, см (например 30)</label><input type="number" id="r_tsize" placeholder="см" inputmode="numeric"></div>
  <div id="r_f6" class="hid"><label>Площадь рулона обоев, м² (стандарт 5.3)</label><input type="number" id="r_rarea" value="5.3" inputmode="decimal"></div>
  <div id="r_f7" class="hid"><label>Площадь упаковки ламината, м²</label><input type="number" id="r_lamarea" value="2.1" inputmode="decimal"></div>
- <div id="r_f8" class="hid"><label>Цена, ₽</label><input type="number" id="r_price" placeholder="₽" inputmode="decimal"></div>
+ <div id="r_f8" class="hid"><label>Цена за шт/упак/м², ₽ (вводишь сам)</label><input type="number" id="r_price" placeholder="₽" inputmode="decimal"></div>
  <button class="btn" onclick="calcRemont()">РАССЧИТАТЬ</button>
  <div class="res" id="r_res" style="display:none">
   <div class="rr"><span class="rl">Площадь:</span><span class="rv" id="r_s">—</span></div>
@@ -298,7 +322,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 </div>
 
 <script>
-/* Ной Технологии V4.0 | Автор: Сухоруков С.Е. | NOI-TECH-2024-SUKHORUKOV */
+/* Ной Технологии V4.1 | Автор: Сухоруков С.Е. | NOI-TECH-2024-SUKHORUKOV */
 /* Все права защищены. Копирование без разрешения запрещено. */
 
 function showTab(id,el){
@@ -326,15 +350,15 @@ function calcMetal(){
  const d4=parseFloat(document.getElementById('m_d4').value)||0;
  const pr=parseFloat(document.getElementById('m_price').value)||0;
  const q=parseInt(document.getElementById('m_qty').value)||1;
- if(isNaN(d1)||isNaN(d2)){alert('Заполни размеры!');return;}
+ if(isNaN(d1)||isNaN(d2)){alert('Заполни длину и размер 2!');return;}
  const L=d1/1000,A=d2/1000,T=d3/1000,B=d4/1000;
  let v=0,a=0;
  if(p==='sheet'||p==='strip'){v=L*A*T;a=2*(L*A+L*T+A*T);}
- else if(p==='arm'||p==='round'){const r=A/2;v=Math.PI*r*r*L;a=2*Math.PI*r*L+2*Math.PI*r*r;}
+ else if(p==='arm'||p==='round'){const r=A/2;v=Math.PI*r*r*L;a=2*Math.PI*r*L;}
  else if(p==='hex'){const r=A/2;v=(3*Math.sqrt(3)/2)*r*r*L;a=6*r*L;}
- else if(p==='pipe'){const R=A/2,r=R-T;if(r<=0){alert('Ошибка!');return;}v=Math.PI*(R*R-r*r)*L;a=2*Math.PI*(R+r)*L;}
- else if(p==='pipe_sq'){const ai=A-2*T;if(ai<=0){alert('Ошибка!');return;}v=(A*A-ai*ai)*L;a=4*A*L+4*ai*L;}
- else if(p==='pipe_rc'){const ai=A-2*T,bi=B-2*T;if(ai<=0||bi<=0){alert('Ошибка!');return;}v=(A*B-ai*bi)*L;a=2*(A+B)*L+2*(ai+bi)*L;}
+ else if(p==='pipe'){const R=A/2,r=R-T;if(r<=0){alert('Толщина стенки больше радиуса!');return;}v=Math.PI*(R*R-r*r)*L;a=2*Math.PI*(R+r)*L;}
+ else if(p==='pipe_sq'){const ai=A-2*T;if(ai<=0){alert('Толщина слишком большая!');return;}v=(A*A-ai*ai)*L;a=4*(A+ai)*L;}
+ else if(p==='pipe_rc'){const ai=A-2*T,bi=B-2*T;if(ai<=0||bi<=0){alert('Толщина слишком большая!');return;}v=(A*B-ai*bi)*L;a=2*(A+B+ai+bi)*L;}
  else if(p==='angle'){v=(2*A*T-T*T)*L;a=(4*A-2*T)*L;}
  else if(p==='shv'){v=(2*A*T+(A-2*T)*T)*L;a=(2*A+4*(A/2))*L;}
  else if(p==='dvt'){v=(2*A*T+(A-2*T)*0.6*T)*L;a=6*A*L;}
@@ -368,15 +392,15 @@ function calcBeton(){
  else if(t==='stolb'){v=d1*d2*d3+d4*Math.PI*(d5/2)*(d5/2)*d3;}
  else if(t==='svai')v=d4*Math.PI*(d5/2)*(d5/2)*d3+d1*d2*0.3;
  else if(t==='styazhka')v=d1*d2*d3;
- // Расход на 1 м³ бетона М200 (упрощённо)
+ else if(t==='kolonna')v=Math.PI*(d2/2)*(d2/2)*d1;
  const mark=document.getElementById('b_mark').value;
- const k={'M100':200,'M150':250,'M200':300,'M250':350,'M300':400,'M350':450,'M400':500};
- const cemK=k[mark]||300; // кг цемента на м³
+ const k={'M100':200,'M150':250,'M200':300,'M250':350,'M300':400,'M350':450,'M400':500,'M450':550,'M500':600};
+ const cemK=k[mark]||300;
  const cemBags=Math.ceil(v*cemK/50);
  const sand=(v*0.45).toFixed(2);
  const grav=(v*0.85).toFixed(2);
  const wat=(v*180).toFixed(0);
- const arm=(v*80).toFixed(1); // ориентировочно кг арматуры
+ const arm=(v*80).toFixed(1);
  document.getElementById('b_v').textContent=v.toFixed(2)+' м³';
  document.getElementById('b_cem').textContent=cemBags+' мешков ('+(v*cemK).toFixed(0)+' кг)';
  document.getElementById('b_sand').textContent=sand+' м³';
@@ -397,11 +421,10 @@ function calcKirpich(){
  const price=parseFloat(document.getElementById('k_price').value)||0;
  const rprice=parseFloat(document.getElementById('k_rprice').value)||0;
  const S=l*h-pr;
- // штук на м² для разных типов
- const rates={'kirp':51*th,'kirp15':39*th,'kirp2':26*th,'gaz':5.6,'peno':5.6,'shlak':12.5,'keram':12.5};
+ const rates={'kirp':51*th,'kirp15':39*th,'kirp2':26*th,'gaz':5.6,'peno':5.6,'shlak':12.5,'keram':12.5,'silikat':51*th,'ogneupor':51*th};
  const n=Math.ceil(S*rates[t]);
  const nz=Math.ceil(n*1.05);
- const rv=(S*0.22*th).toFixed(2); // примерный объём раствора
+ const rv=(S*0.22*th).toFixed(2);
  const cost=price>0?nz*price:0;
  const rcost=rprice>0?rv*rprice:0;
  document.getElementById('k_s').textContent=S.toFixed(2)+' м²';
@@ -422,7 +445,7 @@ function calcPilo(){
  const v1=l*w*t;
  const vt=v1*n;
  const s=l*w*n;
- const wt=vt*500; // сосна ~500 кг/м³
+ const wt=vt*500;
  document.getElementById('p_v1').textContent=v1.toFixed(4)+' м³';
  document.getElementById('p_vt').textContent=vt.toFixed(3)+' м³';
  document.getElementById('p_s').textContent=s.toFixed(2)+' м²';
@@ -440,7 +463,7 @@ function calcSyp(){
  const pr=parseFloat(document.getElementById('s_price').value)||0;
  const truck=parseFloat(document.getElementById('s_truck').value)||10;
  const v=l*w*h;
- const wt=v*d/1000; // в тоннах
+ const wt=v*d/1000;
  const trucks=Math.ceil(wt/truck);
  document.getElementById('s_v').textContent=v.toFixed(2)+' м³';
  document.getElementById('s_wt').textContent=wt.toFixed(2)+' т ('+Math.round(wt*1000)+' кг)';
@@ -472,8 +495,9 @@ function rFields(){
  ['r_f4','r_f5','r_f6','r_f7','r_f8'].forEach(id=>document.getElementById(id).classList.add('hid'));
  if(t==='oboi'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f6').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
  else if(t==='plitka'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f5').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
- else if(t==='laminat'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f7').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
- else if(t==='steny'){document.getElementById('r_f4').classList.remove('hid');}
+ else if(t==='laminat'||t==='linoleum'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f7').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
+ else if(t==='steny'||t==='shtukaturka'||t==='shpaklevka'){document.getElementById('r_f4').classList.remove('hid');document.getElementById('r_f8').classList.remove('hid');}
+ else if(t==='pol'){document.getElementById('r_f8').classList.remove('hid');}
 }
 function calcRemont(){
  const t=document.getElementById('r_type').value;
@@ -483,26 +507,13 @@ function calcRemont(){
  const proem=parseFloat(document.getElementById('r_proem').value)||0;
  const pr=parseFloat(document.getElementById('r_price').value)||0;
  let S=0,n=0;
- if(t==='oboi'){
-  S=2*(l+w)*h-proem;
-  const ra=parseFloat(document.getElementById('r_rarea').value)||5.3;
-  n=Math.ceil(S*1.1/ra);
- }else if(t==='plitka'){
-  S=l*w-proem;
-  const ts=(parseFloat(document.getElementById('r_tsize').value)||30)/100;
-  n=Math.ceil(S*1.1/(ts*ts));
- }else if(t==='laminat'){
-  S=l*w;
-  const la=parseFloat(document.getElementById('r_lamarea').value)||2.1;
-  n=Math.ceil(S*1.1/la);
- }else if(t==='steny'){
-  S=2*(l+w)*h-proem;
-  n=S;
- }else if(t==='pol'){
-  S=l*w;n=S;
- }
+ if(t==='oboi'){S=2*(l+w)*h-proem;const ra=parseFloat(document.getElementById('r_rarea').value)||5.3;n=Math.ceil(S*1.1/ra);}
+ else if(t==='plitka'){S=l*w-proem;const ts=(parseFloat(document.getElementById('r_tsize').value)||30)/100;n=Math.ceil(S*1.1/(ts*ts));}
+ else if(t==='laminat'||t==='linoleum'){S=l*w;const la=parseFloat(document.getElementById('r_lamarea').value)||2.1;n=Math.ceil(S*1.1/la);}
+ else if(t==='steny'||t==='shtukaturka'||t==='shpaklevka'){S=2*(l+w)*h-proem;n=S;}
+ else if(t==='pol'){S=l*w;n=S;}
  document.getElementById('r_s').textContent=S.toFixed(2)+' м²';
- document.getElementById('r_n').textContent=t==='steny'||t==='pol'?S.toFixed(2):n+' шт/упак';
+ document.getElementById('r_n').textContent=(t==='steny'||t==='pol'||t==='shtukaturka'||t==='shpaklevka')?S.toFixed(2):n+' шт/упак';
  document.getElementById('r_pt').textContent=pr>0&&n>0?Math.round(n*pr)+' ₽':'—';
  document.getElementById('r_res').style.display='block';
 }
