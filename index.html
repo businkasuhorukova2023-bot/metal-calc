@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>СтройКальк V5.0 | Ной Технологии</title>
+<title>СтройКальк V5.2 | Ной Технологии</title>
 <!-- © 2024 Ной Технологии. Автор: Сухоруков Сергей Евгеньевич. Все права защищены. -->
 <!-- NOI-TECH-2024-SUKHORUKOV -->
 <style>
@@ -37,7 +37,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 </head>
 <body>
 <div class="container">
-<h1>🏗️ СтройКальк V5.0</h1>
+<h1>🏗️ СтройКальк V5.2</h1>
 <div class="sub">Универсальный калькулятор мастера. © Ной Технологии</div>
 
 <div class="tabs">
@@ -56,7 +56,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <div class="sec active" id="metal">
 <div class="card">
  <label>МЕТАЛЛ (только плотность, цену вводишь сам)</label>
- <select id="m_metal">
+ <select id="m_metal" onchange="checkPrecious()">
   <option value="7850">Чёрный металл (Ст3, Ст20)</option>
   <option value="7900">Нержавейка AISI 304</option>
   <option value="7700">Нержавейка AISI 430</option>
@@ -96,14 +96,14 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="mesh">Сетка (вес 1 м²)</option>
  </select>
  <label>ЕДИНИЦЫ ИЗМЕРЕНИЯ</label>
- <select id="m_units">
-  <option value="1">Миллиметры (мм)</option>
-  <option value="10">Сантиметры (см)</option>
-  <option value="1000">Метры (м)</option>
+ <select id="m_units" onchange="updateLabels()">
+  <option value="1000">Миллиметры (мм)</option>
+  <option value="100">Сантиметры (см)</option>
+  <option value="1">Метры (м)</option>
  </select>
- <div class="row"><div><label>Длина</label><input type="number" id="m_d1" placeholder="0" inputmode="decimal"></div><div><label>Размер 2 (диаметр/ширина)</label><input type="number" id="m_d2" placeholder="0" inputmode="decimal"></div></div>
- <div id="m_d3b"><label>Размер 3 (толщина/сторона)</label><input type="number" id="m_d3" placeholder="0" inputmode="decimal"></div>
- <div id="m_d4b" class="hid"><label>Размер 4 (вторая сторона/толщина полки)</label><input type="number" id="m_d4" placeholder="0" inputmode="decimal"></div>
+ <div class="row"><div><label id="lbl_d1">Длина (мм)</label><input type="number" id="m_d1" placeholder="0" inputmode="decimal"></div><div><label id="lbl_d2">Размер 2 (мм)</label><input type="number" id="m_d2" placeholder="0" inputmode="decimal"></div></div>
+ <div id="m_d3b"><label id="lbl_d3">Размер 3 (мм)</label><input type="number" id="m_d3" placeholder="0" inputmode="decimal"></div>
+ <div id="m_d4b" class="hid"><label id="lbl_d4">Размер 4 (мм)</label><input type="number" id="m_d4" placeholder="0" inputmode="decimal"></div>
  <div class="row"><div><label>ЦЕНА ЗА КГ, ₽ (вводишь сам)</label><input type="number" id="m_price" placeholder="₽" inputmode="decimal"></div><div><label>Кол-во, шт</label><input type="number" id="m_qty" value="1" inputmode="numeric"></div></div>
  <button class="btn" onclick="calcMetal()">РАССЧИТАТЬ</button>
  <div class="res" id="m_res" style="display:none">
@@ -279,7 +279,7 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <div class="sec" id="kraska">
 <div class="card">
  <label>ПОВЕРХНОСТЬ (расход л/м² на 1 слой)</label>
- <select id="kr_surf">
+ <select id="ks_surf">
   <option value="0.15">Стена оштукатуренная</option>
   <option value="0.12">Стена гладкая (шпаклёвка)</option>
   <option value="0.2">Дерево необработанное</option>
@@ -294,19 +294,19 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="0.2">Трубы металлические</option>
  </select>
  <label>ПЛОЩАДЬ, м²</label>
- <input type="number" id="kr_area" placeholder="м²" inputmode="decimal">
+ <input type="number" id="ks_area" placeholder="м²" inputmode="decimal">
  <label>КОЛ-ВО СЛОЁВ</label>
- <input type="number" id="kr_layers" value="2" inputmode="numeric">
+ <input type="number" id="ks_layers" value="2" inputmode="numeric">
  <label>ОБЪЁМ БАНКИ, л</label>
- <input type="number" id="kr_can" value="10" inputmode="decimal">
+ <input type="number" id="ks_can" value="10" inputmode="decimal">
  <label>ЦЕНА БАНКИ, ₽ (вводишь сам)</label>
- <input type="number" id="kr_price" placeholder="₽" inputmode="decimal">
+ <input type="number" id="ks_price" placeholder="₽" inputmode="decimal">
  <button class="btn" onclick="calcKraska()">РАССЧИТАТЬ</button>
- <div class="res" id="kr_res" style="display:none">
-  <div class="rr"><span class="rl">Расход на 1 слой:</span><span class="rv" id="kr_r1">—</span></div>
-  <div class="rr"><span class="rl">Общий расход:</span><span class="rv" id="kr_rt">—</span></div>
-  <div class="rr"><span class="rl">Банок нужно:</span><span class="rv" id="kr_n">—</span></div>
-  <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="kr_pt">—</span></div>
+ <div class="res" id="ks_res" style="display:none">
+  <div class="rr"><span class="rl">Расход на 1 слой:</span><span class="rv" id="ks_r1">—</span></div>
+  <div class="rr"><span class="rl">Общий расход:</span><span class="rv" id="ks_rt">—</span></div>
+  <div class="rr"><span class="rl">Банок нужно:</span><span class="rv" id="ks_n">—</span></div>
+  <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="ks_pt">—</span></div>
  </div>
 </div>
 </div>
@@ -315,17 +315,17 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 <div class="sec" id="krepezh">
 <div class="card">
  <label>ТИП КРЕПЕЖА</label>
- <select id="kr_type">
+ <select id="kp_type">
   <option value="gvozd">Гвоздь строительный</option>
   <option value="samorez_derevo">Саморез по дереву</option>
   <option value="samorez_metall">Саморез по металлу</option>
   <option value="bolt">Болт с гайкой</option>
   <option value="shurup">Шуруп</option>
   <option value="dybel">Дюбель</option>
-  <option value="ankер">Анкер</option>
+  <option value="anker">Анкер</option>
  </select>
  <label>РАЗМЕР</label>
- <select id="kr_size">
+ <select id="kp_size">
   <option value="0.003">Гвоздь 50мм (~3г)</option>
   <option value="0.005">Гвоздь 100мм (~5г)</option>
   <option value="0.008">Гвоздь 150мм (~8г)</option>
@@ -339,13 +339,13 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
   <option value="0.1">Болт М16 (~100г)</option>
  </select>
  <label>КОЛИЧЕСТВО, ШТ</label>
- <input type="number" id="kr_qty" placeholder="шт" inputmode="numeric">
+ <input type="number" id="kp_qty" placeholder="шт" inputmode="numeric">
  <label>ЦЕНА ЗА 1 ШТ, ₽ (вводишь сам)</label>
- <input type="number" id="kr_price" placeholder="₽" inputmode="decimal">
+ <input type="number" id="kp_price" placeholder="₽" inputmode="decimal">
  <button class="btn" onclick="calcKrepezh()">РАССЧИТАТЬ</button>
- <div class="res" id="kr_res" style="display:none">
-  <div class="rr"><span class="rl">Общий вес:</span><span class="rv" id="kr_wt">—</span></div>
-  <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="kr_pt">—</span></div>
+ <div class="res" id="kp_res" style="display:none">
+  <div class="rr"><span class="rl">Общий вес:</span><span class="rv" id="kp_wt">—</span></div>
+  <div class="rr"><span class="rl">ИТОГО:</span><span class="rv p" id="kp_pt">—</span></div>
  </div>
 </div>
 </div>
@@ -415,14 +415,33 @@ select:focus,input:focus{border-color:#00d4ff;outline:none}
 </div>
 
 <script>
-/* Ной Технологии V5.0 | Автор: Сухоруков С.Е. | NOI-TECH-2024-SUKHORUKOV */
+/* Ной Технологии V5.2 | Автор: Сухоруков С.Е. | NOI-TECH-2024-SUKHORUKOV */
 /* Все права защищены. Копирование без разрешения запрещено. */
+
+let isPrecious = false;
 
 function showTab(id,el){
  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
  document.getElementById(id).classList.add('active');
  el.classList.add('active');
+}
+
+function checkPrecious(){
+ const sel = document.getElementById('m_metal');
+ const val = sel.options[sel.selectedIndex].text.toLowerCase();
+ isPrecious = (val.includes('золото') || val.includes('серебро') || val.includes('платина'));
+}
+
+function updateLabels(){
+ const u=document.getElementById('m_units').value;
+ let unit='мм';
+ if(u==='100')unit='см';
+ if(u==='1')unit='м';
+ document.getElementById('lbl_d1').textContent='Длина ('+unit+')';
+ document.getElementById('lbl_d2').textContent='Размер 2 ('+unit+')';
+ document.getElementById('lbl_d3').textContent='Размер 3 ('+unit+')';
+ document.getElementById('lbl_d4').textContent='Размер 4 ('+unit+')';
 }
 
 // МЕТАЛЛ
@@ -462,8 +481,19 @@ function calcMetal(){
  else if(p==='dvt'){v=(2*A*T+(A-2*T)*0.6*T)*L;a=6*A*L;}
  else if(p==='mesh'){v=A*A*T*d/1000;a=A*A;}
  const w1=v*d,wt=w1*q,ar=a*q;
- document.getElementById('m_w1').textContent=w1.toFixed(3)+' кг';
- document.getElementById('m_wt').textContent=wt.toFixed(3)+' кг';
+ 
+ // Для драгоценных металлов показываем в граммах
+ let w1Text, wtText;
+ if(isPrecious){
+  w1Text = (w1*1000).toFixed(2) + ' г';
+  wtText = (wt*1000).toFixed(2) + ' г';
+ } else {
+  w1Text = w1.toFixed(3) + ' кг';
+  wtText = wt.toFixed(3) + ' кг';
+ }
+ 
+ document.getElementById('m_w1').textContent=w1Text;
+ document.getElementById('m_wt').textContent=wtText;
  document.getElementById('m_a').textContent=ar.toFixed(2)+' м²';
  document.getElementById('m_p1').textContent=pr>0?Math.round(w1*pr)+' ₽':'—';
  document.getElementById('m_pt').textContent=pr>0?Math.round(wt*pr)+' ₽':'—';
@@ -572,32 +602,32 @@ function calcSyp(){
  document.getElementById('s_res').style.display='block';
 }
 
-// КРАСКА
+// КРАСКА (ID изменены на ks_)
 function calcKraska(){
- const rate=parseFloat(document.getElementById('kr_surf').value);
- const area=parseFloat(document.getElementById('kr_area').value)||0;
- const layers=parseInt(document.getElementById('kr_layers').value)||1;
- const can=parseFloat(document.getElementById('kr_can').value)||1;
- const pr=parseFloat(document.getElementById('kr_price').value)||0;
+ const rate=parseFloat(document.getElementById('ks_surf').value);
+ const area=parseFloat(document.getElementById('ks_area').value)||0;
+ const layers=parseInt(document.getElementById('ks_layers').value)||1;
+ const can=parseFloat(document.getElementById('ks_can').value)||1;
+ const pr=parseFloat(document.getElementById('ks_price').value)||0;
  const r1=area*rate;
  const rt=r1*layers;
  const n=Math.ceil(rt/can);
- document.getElementById('kr_r1').textContent=r1.toFixed(2)+' л';
- document.getElementById('kr_rt').textContent=rt.toFixed(2)+' л';
- document.getElementById('kr_n').textContent=n+' банок';
- document.getElementById('kr_pt').textContent=pr>0?Math.round(n*pr)+' ₽':'—';
- document.getElementById('kr_res').style.display='block';
+ document.getElementById('ks_r1').textContent=r1.toFixed(2)+' л';
+ document.getElementById('ks_rt').textContent=rt.toFixed(2)+' л';
+ document.getElementById('ks_n').textContent=n+' банок';
+ document.getElementById('ks_pt').textContent=pr>0?Math.round(n*pr)+' ₽':'—';
+ document.getElementById('ks_res').style.display='block';
 }
 
-// КРЕПЁЖ
+// КРЕПЁЖ (ID изменены на kp_)
 function calcKrepezh(){
- const w=parseFloat(document.getElementById('kr_size').value);
- const q=parseInt(document.getElementById('kr_qty').value)||0;
- const pr=parseFloat(document.getElementById('kr_price').value)||0;
+ const w=parseFloat(document.getElementById('kp_size').value);
+ const q=parseInt(document.getElementById('kp_qty').value)||0;
+ const pr=parseFloat(document.getElementById('kp_price').value)||0;
  const wt=w*q;
- document.getElementById('kr_wt').textContent=wt.toFixed(3)+' кг ('+q+' шт)';
- document.getElementById('kr_pt').textContent=pr>0?Math.round(q*pr)+' ₽':'—';
- document.getElementById('kr_res').style.display='block';
+ document.getElementById('kp_wt').textContent=wt.toFixed(3)+' кг ('+q+' шт)';
+ document.getElementById('kp_pt').textContent=pr>0?Math.round(q*pr)+' ₽':'—';
+ document.getElementById('kp_res').style.display='block';
 }
 
 // ЭЛЕКТРИКА
@@ -637,6 +667,9 @@ function calcRemont(){
  document.getElementById('r_pt').textContent=pr>0&&n>0?Math.round(n*pr)+' ₽':'—';
  document.getElementById('r_res').style.display='block';
 }
+
+updateLabels();
+checkPrecious();
 </script>
 </body>
 </html>
