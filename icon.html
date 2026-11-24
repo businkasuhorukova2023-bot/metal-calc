@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Генератор иконки | Ной Технологии</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0f172a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:20px}
+h1{color:#00d4ff;font-size:20px;margin-bottom:5px}
+.sub{color:#64748b;font-size:12px;margin-bottom:20px}
+canvas{border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.5);max-width:100%}
+.btn{margin-top:20px;padding:16px 40px;background:linear-gradient(135deg,#00d4ff,#0099cc);color:#fff;border:none;border-radius:12px;font-size:18px;font-weight:bold;cursor:pointer}
+.btn:active{transform:scale(0.97)}
+.note{margin-top:15px;color:#64748b;font-size:12px;text-align:center;max-width:400px}
+</style>
+</head>
+<body>
+<h1>🎨 Иконка СтройКалька</h1>
+<div class="sub">© Ной Технологии | Нажми кнопку — иконка скачается сама</div>
+<canvas id="c" width="512" height="512"></canvas>
+<button class="btn" onclick="download()">⬇ СКАЧАТЬ ИКОНКУ (512×512)</button>
+<div class="note">Файл <b>icon-512.png</b> сохранится в папку "Загрузки". Он нужен для упаковки в приложение и для Яндекс.Игр.</div>
+
+<script>
+/* Ной Технологии | Иконка СтройКальк | NOI-TECH-2024-SUKHORUKOV */
+var cv=document.getElementById('c'),ctx=cv.getContext('2d');
+function rr(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+function draw(){
+ // фон-градиент со скруглением
+ ctx.clearRect(0,0,512,512);
+ var g=ctx.createLinearGradient(0,0,512,512);
+ g.addColorStop(0,'#00d4ff');g.addColorStop(1,'#005f8f');
+ rr(0,0,512,512,100);ctx.fillStyle=g;ctx.fill();
+ // мягкая световая пятно сверху
+ var rg=ctx.createRadialGradient(160,120,20,160,120,400);
+ rg.addColorStop(0,'rgba(255,255,255,0.25)');rg.addColorStop(1,'rgba(255,255,255,0)');
+ rr(0,0,512,512,100);ctx.fillStyle=rg;ctx.fill();
+ // тень под калькулятором
+ ctx.shadowColor='rgba(0,0,0,0.35)';ctx.shadowBlur=30;ctx.shadowOffsetY=12;
+ // корпус калькулятора
+ rr(120,120,272,270,28);ctx.fillStyle='#ffffff';ctx.fill();
+ ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+ // экран
+ rr(150,150,212,70,14);ctx.fillStyle='#0f172a';ctx.fill();
+ ctx.fillStyle='#00d4ff';ctx.font='bold 40px Arial';ctx.textAlign='right';
+ ctx.fillText('353',340,198);
+ ctx.font='bold 18px Arial';ctx.fillStyle='#64748b';
+ ctx.fillText('кг',340,214);
+ // кнопки 3x3
+ var cols=['#e2e8f0','#e2e8f0','#0099cc'];
+ for(var r=0;r<3;r++)for(var c=0;c<3;c++){
+  rr(150+c*72,240+r*62,60,50,10);
+  ctx.fillStyle=(c===2)?'#0099cc':'#e2e8f0';ctx.fill();
+ }
+ // золотой рубль сверху справа
+ ctx.shadowColor='rgba(0,0,0,0.3)';ctx.shadowBlur=15;ctx.shadowOffsetY=6;
+ ctx.beginPath();ctx.arc(400,110,58,0,Math.PI*2);ctx.fillStyle='#ffd700';ctx.fill();
+ ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+ ctx.strokeStyle='#b8860b';ctx.lineWidth=6;ctx.beginPath();ctx.arc(400,110,58,0,Math.PI*2);ctx.stroke();
+ ctx.fillStyle='#1a1a1a';ctx.font='bold 64px Arial';ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.fillText('₽',400,112);
+ ctx.textBaseline='alphabetic';
+ // подпись снизу
+ ctx.fillStyle='#ffffff';ctx.font='bold 46px Arial';ctx.textAlign='center';
+ ctx.shadowColor='rgba(0,0,0,0.3)';ctx.shadowBlur=8;ctx.shadowOffsetY=3;
+ ctx.fillText('СтройКальк',256,452);
+ ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetY=0;
+ ctx.fillStyle='rgba(255,255,255,0.7)';ctx.font='bold 18px Arial';
+ ctx.fillText('НОЙ ТЕХНОЛОГИИ',256,482);
+}
+
+function download(){
+ var a=document.createElement('a');
+ a.download='icon-512.png';
+ a.href=cv.toDataURL('image/png');
+ a.click();
+}
+
+draw();
+</script>
+</body>
+</html>
